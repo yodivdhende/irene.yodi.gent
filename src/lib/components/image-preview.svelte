@@ -1,10 +1,34 @@
 <script lang='ts'>
-  let { src, widthSpan, heightSpan}: {src: string, widthSpan: number, heightSpan: number} = $props();
-  let widthStyleString = $derived(`w-${widthSpan}`)
-  let heightStyleString = $derived(`h-${heightSpan}`)
+  let { src, randomNumbers}: {src: string, width: number, height: number, randomNumbers: number[]} = $props();
+
+  let img: {onload: () => void, width:number, height: number}
+  let width: number = $state(0);
+  let height: number = $state(0);
+
+  img.onload = function(){
+    width = img.width
+    height = img.height
+  }
+
+
+  let spans = $derived(getSpans({width, height}));
+  let widthStyleString = $derived(`w-${spans.width}`)
+  let heightStyleString = $derived(`h-${spans.height}`)
+
+
+  function getSpans({width, height}: {width: number, height: number}){
+    const firstRandomNumber = randomNumbers[Math.round(Math.random() * randomNumbers.length)];
+    const secondRandomNumber = randomNumbers[Math.round(Math.random() * randomNumbers.length)];
+    const bigRandomNumber = firstRandomNumber >= secondRandomNumber ? firstRandomNumber : secondRandomNumber;
+    const smallRandomNumber = firstRandomNumber >= secondRandomNumber ? secondRandomNumber: firstRandomNumber;
+    return {
+      width: width > height ? bigRandomNumber : smallRandomNumber ,
+      height: height > width ? bigRandomNumber: smallRandomNumber,
+    }
+  }
 </script>
 
-  <img alt="wedding" src={src} class={`${widthStyleString} ${heightStyleString}`}/>
+  <img alt="wedding" src={src} bind:this={img} class={`${widthStyleString} ${heightStyleString}`}/>
 
 <style>
   img {

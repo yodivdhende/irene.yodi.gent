@@ -2,6 +2,7 @@
 	import homeTitleImage from '$lib/assets/home-title.png';
 	import ImagePreview from '$lib/components/image-preview.svelte';
 
+
   const randomNumbers: number[] = [1,1,1,2,2,3];
 
   function getRandomDimentions(){
@@ -16,20 +17,13 @@
     return `https://picsum.photos/${width}/${height}`;
   }
 
-  function getRandomImage(){
+  function getRandomImage() {
     const dimention =getRandomDimentions();
-    const firstRandomNumber = randomNumbers[Math.round(Math.random() * randomNumbers.length)];
-    const secondRandomNumber = randomNumbers[Math.round(Math.random() * randomNumbers.length)];
-    const bigRandomNumber = firstRandomNumber >= secondRandomNumber ? firstRandomNumber : secondRandomNumber;
-    const smallRandomNumber = firstRandomNumber >= secondRandomNumber ? secondRandomNumber: firstRandomNumber;
-    const dimentionSpan = {
-      width: dimention.width > dimention.height ? bigRandomNumber : smallRandomNumber ,
-      heigth: dimention.height > dimention.width ? bigRandomNumber: smallRandomNumber,
-    }
     return {
       src: getRandomUrl(dimention),
-      widthSpan: dimentionSpan.width,
-      heightSpan: dimentionSpan.heigth,
+      width: dimention.width,
+      height: dimention.height,
+      randomNumbers: randomNumbers,
     }
 
   }
@@ -75,11 +69,6 @@
 	}
 
 	.images {
-    /*
-		column-width: calc(200px + 10vw); 
-		padding-left: 2.5%;
-		margin: 0;
-    */
     width: calc(100% - 2em);
     height: 100%;
     padding: 1em;
