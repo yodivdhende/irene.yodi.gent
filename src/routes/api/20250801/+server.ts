@@ -4,9 +4,9 @@ import { error, json, type RequestHandler } from "@sveltejs/kit";
 export const POST: RequestHandler = async ({request}) => {
     const {page} = await request.json();
     if(typeof page !== 'number') throw error(400, { message: `request doesn't has correct page varible`});
-    return json({
-      images: imageFetcher.getImagesForPage({dir:'20250801', page}),
-    })
+    const images = await imageFetcher.getImagesForPage({dir:'20250801', page})
+    console.log('Post for images', { page, images})
+    return json({ images })
 }
 
 export const GET: RequestHandler = async () => {

@@ -1,15 +1,18 @@
 <script lang='ts'>
-  let { src, randomNumbers}: {src: string, width: number, height: number, randomNumbers: number[]} = $props();
+  let { name, randomNumbers}: {name: string,  randomNumbers: number[]} = $props();
 
-  let img: {onload: () => void, width:number, height: number}
-  let width: number = $state(0);
-  let height: number = $state(0);
+  let img: HTMLImageElement | undefined = $state(undefined) ;
+  let width: number = $state(300);
+  let height: number = $state(200);
 
-  img.onload = function(){
-    width = img.width
-    height = img.height
-  }
-
+  $effect(()=>{
+    if(img != null){
+      img.onload = function() {
+        width = img.width
+        height = img.height
+      }
+    }
+  })
 
   let spans = $derived(getSpans({width, height}));
   let widthStyleString = $derived(`w-${spans.width}`)
@@ -17,8 +20,9 @@
 
 
   function getSpans({width, height}: {width: number, height: number}){
-    const firstRandomNumber = randomNumbers[Math.round(Math.random() * randomNumbers.length)];
-    const secondRandomNumber = randomNumbers[Math.round(Math.random() * randomNumbers.length)];
+    //TODO the width and the height doesnt seem to be the widht the original image
+    const firstRandomNumber = randomNumbers[Math.round(Math.random() * (randomNumbers.length-1))];
+    const secondRandomNumber = randomNumbers[Math.round(Math.random() * (randomNumbers.length-1))];
     const bigRandomNumber = firstRandomNumber >= secondRandomNumber ? firstRandomNumber : secondRandomNumber;
     const smallRandomNumber = firstRandomNumber >= secondRandomNumber ? secondRandomNumber: firstRandomNumber;
     return {
@@ -28,15 +32,24 @@
   }
 </script>
 
-  <img alt="wedding" src={src} bind:this={img} class={`${widthStyleString} ${heightStyleString}`}/>
+{#await import(`../assets/images/20250801/${name}`)}
+    <div class="placeholder"></div>
+{:then src}
+    <img alt="wedding" src={src.default} bind:this={img} class={`${widthStyleString} ${heightStyleString}`}/>
+{/await}
 
 <style>
+  .placeholder {
+    width: 300px;
+    height: 200px;
+    background-color: silver;
+  }
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position:50% 50%;
-    border: 1px solid red;
+    border-radius: 2em;
   }
 
   .w-1 {
