@@ -1,18 +1,23 @@
 <script lang="ts">
+	import { resolveRoute } from '$app/paths';
 	import homeTitleImage from '$lib/assets/home-title.png';
 	import type { Image } from '$lib/assets/server/image-fetcher';
 	import ImagePreview from '$lib/components/image-preview.svelte';
 	import { onMount } from 'svelte';
 
 	const randomNumbers: number[] = [1, 1, 1, 2, 2, 3];
-	const pageCount: number = 0;
+	let pageCount: number = 0;
 	let images: Image[] = $state([]);
-  
-  onMount(()=>{
-    getNewImages(pageCount).then((newImages) => newImages ? images = [...images, ...newImages] : undefined);
-  })
+	let scrollY: number;
+	let innerHeight: number;
 
-	async function getNewImages(page: number): Promise<Image[] | undefined>  {
+	onMount(() => {
+		getNewImages(pageCount).then((newImages) =>
+			newImages ? (images = [...images, ...newImages]) : undefined
+		);
+	});
+
+	async function getNewImages(page: number): Promise<Image[] | undefined> {
 		try {
 			const response = await fetch('api/20250801', {
 				method: 'POST',
@@ -20,21 +25,31 @@
 			});
 			if (!response.ok) throw new Error(`image request status: ${response.status}`);
 			const result = await response.json();
-      return result.images;
+			return result.images;
 		} catch (error) {
 			console.error(error);
 		}
 	}
+
+	function onscroll() {
+		if (scrollY + innerHeight >= document.documentElement.scrollHeight - 500) {
+			pageCount += 1;
+			getNewImages(pageCount).then((newImages) =>
+				newImages ? (images = [...images, ...newImages]) : undefined
+			);
+		}
+	}
 </script>
 
+<svelte:window bind:scrollY bind:innerHeight {onscroll} />
 <div class="background">
 	<img alt="Irene & Yodi title" src={homeTitleImage} />
 </div>
 <main>
 	<div class="title-placeholder"></div>
 	<div class="gallery">
-		{#each images as image }
-			<ImagePreview name={image.name}  {randomNumbers}/>
+		{#each images as image}
+			<ImagePreview name={image.name} {randomNumbers} />
 		{/each}
 	</div>
 </main>
