@@ -1,5 +1,5 @@
 <script lang='ts'>
-  let { name, randomNumbers}: {name: string,  randomNumbers: number[]} = $props();
+  let { name, randomNumbers, dir}: {name: string,  randomNumbers: number[], dir:string} = $props();
 
   let img: HTMLImageElement | undefined = $state(undefined) ;
   let width: number = $state(300);
@@ -32,7 +32,7 @@
   }
 </script>
 
-{#await import(`../assets/images/20250801/${name}`)}
+{#await import(`../assets/images/${dir}/${name}`)}
     <div class="placeholder"></div>
 {:then src}
     <img alt="wedding" src={src.default} bind:this={img} class={`${widthStyleString} ${heightStyleString}`}/>
