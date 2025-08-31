@@ -27,7 +27,6 @@
     const secondRandomNumber = randomNumbers[Math.round(Math.random() * (randomNumbers.length-1))];
     const bigRandomNumber = firstRandomNumber >= secondRandomNumber ? firstRandomNumber : secondRandomNumber;
     const smallRandomNumber = firstRandomNumber >= secondRandomNumber ? secondRandomNumber: firstRandomNumber;
-    console.log()
     return {
       width:  bigRandomNumber,
       height: smallRandomNumber,

@@ -1,28 +1,51 @@
 <script lang='ts'>
 	import { goto } from '$app/navigation';
 	import { ChevronLeft, ChevronRight, CircleX } from '@lucide/svelte';
-	import { redirect } from '@sveltejs/kit';
 
   let {data} = $props();
 
   function close() {
     goto(`/gallery/${data.dir}`)
   }
+
+  async function gotoNext() {
+    fetch(`/api/${data.dir}/next`, {
+      method: 'POST',
+      body: JSON.stringify({ name: data.name }),
+    }).then(async response => {
+      if(response.ok === false) return;
+      const {name: nextImage} = await response.json();
+      if(typeof nextImage !== 'string') return;
+      goto(`/focus/${data.dir}/${nextImage}`)
+    });
+  }
+  async function gotoPrevious() {
+    fetch(`/api/${data.dir}/previous`, {
+      method: 'POST',
+      body: JSON.stringify({ name: data.name }),
+    }).then(async response => {
+      if(response.ok === false) return;
+      const {name: previousImage} = await response.json();
+      if(typeof previousImage !== 'string') return;
+      goto(`/focus/${data.dir}/${previousImage}`)
+    });
+
+  }
 </script>
 
 <main>
-  <div class="arrow" style="grid-area: left">
+  <button class="arrow" style="grid-area: left" onclick={gotoPrevious}>
     <ChevronLeft />
-  </div>
+  </button>
   <div class="image">
     <img alt="wedding" src={data.imageUrl}>
   </div>
   <button class="close" onclick={close}>
     <CircleX />
   </button>
-  <div class="arrow" style="grid-area: right">
+  <button class="arrow" style="grid-area: right" onclick={gotoNext}>
     <ChevronRight />
-  </div>
+  </button >
 </main>
 
 <style>
