@@ -7,7 +7,6 @@
 
 
   let images: Image[] = $state([])
-	const randomNumbers: number[] = [1, 1, 1, 2, 2, 3];
 	let pageCount: number = 0;
   let scrollY: number = $state(0);
   let innerHeight: number = $state(0); 
@@ -46,7 +45,7 @@
 <svelte:window bind:scrollY bind:innerHeight {onscroll} />
 <main>
   {#each images as image}
-    <ImagePreview name={image.name} {randomNumbers} {dir}/>
+    <ImagePreview name={image.name} {dir}/>
   {/each}
 </main>
 
@@ -57,7 +56,7 @@
 		padding: 1em;
 		display: grid;
 		grid-template-columns: repeat(6, 1fr);
-		grid-auto-rows: 400px 200px;
+		grid-auto-rows: 300px 200px;
 		grid-gap: 1em;
 		grid-auto-flow: dense;
 		background-color: hsl(95 50% 90%);

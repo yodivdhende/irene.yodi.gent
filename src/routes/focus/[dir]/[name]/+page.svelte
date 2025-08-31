@@ -1,7 +1,13 @@
 <script lang='ts'>
+	import { goto } from '$app/navigation';
 	import { ChevronLeft, ChevronRight, CircleX } from '@lucide/svelte';
+	import { redirect } from '@sveltejs/kit';
 
   let {data} = $props();
+
+  function close() {
+    goto(`/gallery/${data.dir}`)
+  }
 </script>
 
 <main>
@@ -11,9 +17,9 @@
   <div class="image">
     <img alt="wedding" src={data.imageUrl}>
   </div>
-  <div class="close">
+  <button class="close" onclick={close}>
     <CircleX />
-  </div>
+  </button>
   <div class="arrow" style="grid-area: right">
     <ChevronRight />
   </div>
@@ -39,6 +45,7 @@
     justify-self: center;
     grid-area: img;
   } 
+
   .image img {
     width: 100%;
     border-radius: 2em;
@@ -66,11 +73,22 @@
     align-items: center;
     padding: 0.5em 30%;
     border-radius: 0.5em;
+    background-color: none;
   }
 
   .close:hover {
     color: black;
     background-color: rgba(255,255,255,0.8);
   }
+
+  button {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
 
 </style>

@@ -1,5 +1,7 @@
 <script lang='ts'>
-  let { name, randomNumbers, dir}: {name: string,  randomNumbers: number[], dir:string} = $props();
+  let { name, dir}: {name: string,  dir:string} = $props();
+
+	const randomNumbers: number[] = [1, 1, 1, 2, 2, 3];
 
   let img: HTMLImageElement | undefined = $state(undefined) ;
   let width: number = $state(300);
@@ -25,9 +27,10 @@
     const secondRandomNumber = randomNumbers[Math.round(Math.random() * (randomNumbers.length-1))];
     const bigRandomNumber = firstRandomNumber >= secondRandomNumber ? firstRandomNumber : secondRandomNumber;
     const smallRandomNumber = firstRandomNumber >= secondRandomNumber ? secondRandomNumber: firstRandomNumber;
+    console.log()
     return {
-      width: width > height ? bigRandomNumber : smallRandomNumber ,
-      height: height > width ? bigRandomNumber: smallRandomNumber,
+      width:  bigRandomNumber,
+      height: smallRandomNumber,
     }
   }
 </script>
@@ -35,7 +38,9 @@
 {#await import(`../assets/images/${dir}/${name}`)}
     <div class="placeholder"></div>
 {:then src}
-    <img alt="wedding" src={src.default} bind:this={img} class={`${widthStyleString} ${heightStyleString}`}/>
+    <a href={`/focus/${dir}/${name}`} class={`${widthStyleString} ${heightStyleString}`}>
+      <img alt="wedding" src={src.default} bind:this={img} />
+    </a>
 {/await}
 
 <style>
