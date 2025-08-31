@@ -29,7 +29,7 @@
 
 	async function getNewImages(page: number): Promise<Image[] | undefined> {
 		try {
-			const response = await fetch(`api/${dir}`, {
+			const response = await fetch(`/api/${dir}`, {
 				method: 'POST',
 				body: JSON.stringify({ page })
 			});

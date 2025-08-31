@@ -1,0 +1,1 @@
+<h1>Focus page</h1>
