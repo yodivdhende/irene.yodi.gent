@@ -5,7 +5,6 @@
   let {data}: {data: {dir: string, name: string}} = $props();
   let dir = $derived(data.dir);
   let name = $derived(data.name);
-  let imageUrl = $derived(`/src/lib/assets/images/${dir}/${name}`);
 
   function close() {
     focusImageService.setFocusImage(null);
