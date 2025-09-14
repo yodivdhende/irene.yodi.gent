@@ -44,7 +44,11 @@
     <ChevronLeft size="48"/>
   </button>
   <div class="image">
-    <img alt="wedding" src={imageUrl}>
+    {#await import(/*@vite-ignore*/ `$lib/assets/images/${dir}/${name}`)}
+      <div class="placeholder"></div>
+    {:then src}
+        <img alt="wedding" src={src.default} />
+    {/await}
   </div>
   <button class="arrow" style="grid-area: right" onclick={gotoNext}>
     <ChevronRight size="48"/>

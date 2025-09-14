@@ -44,7 +44,7 @@
 
 </script>
 
-{#await import(/*@vite-ignore*/ `../assets/images/${dir}/${name}`)}
+{#await import(/*@vite-ignore*/ `$lib/assets/images/${dir}/${name}`)}
 	<div class="placeholder"></div>
 {:then src}
 	<button onclick={setFocusImage} class={`${widthStyleString} ${heightStyleString}`}>
