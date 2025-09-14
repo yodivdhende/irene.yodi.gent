@@ -44,7 +44,7 @@
 
 </script>
 
-{#await import(`../assets/images/${dir}/${name}`)}
+{#await import(/*@vite-ignore*/ `../assets/images/${dir}/${name}`)}
 	<div class="placeholder"></div>
 {:then src}
 	<button onclick={setFocusImage} class={`${widthStyleString} ${heightStyleString}`}>
@@ -95,7 +95,7 @@
 		outline: inherit;
 	}
 
-	@media screen and (max-width: 500px) {
+	@media screen and (max-width: 650px) {
 		.w-1,
 		.w-2,
 		.w-3 {

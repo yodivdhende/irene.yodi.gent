@@ -62,7 +62,7 @@
 		background-color: hsl(95 50% 90%);
   }
 
-	@media screen and (max-width: 500px) {
+	@media screen and (max-width: 650px) {
 		main {
 			grid-template-columns: repeat(2, 1fr);
 		}
