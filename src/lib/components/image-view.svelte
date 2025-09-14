@@ -1,5 +1,4 @@
 <script lang='ts'>
-	import { goto } from '$app/navigation';
 	import {  focusImageService } from '$lib/services/image-focus.svelte';
 	import { ChevronLeft, ChevronRight, CircleX } from '@lucide/svelte';
 
@@ -38,17 +37,17 @@
 </script>
 
 <main>
+  <button class="close" onclick={close}>
+    <CircleX size="48"/>
+  </button>
   <button class="arrow" style="grid-area: left" onclick={gotoPrevious}>
-    <ChevronLeft />
+    <ChevronLeft size="48"/>
   </button>
   <div class="image">
     <img alt="wedding" src={imageUrl}>
   </div>
-  <button class="close" onclick={close}>
-    <CircleX />
-  </button>
   <button class="arrow" style="grid-area: right" onclick={gotoNext}>
-    <ChevronRight />
+    <ChevronRight size="48"/>
   </button >
 </main>
 
@@ -58,10 +57,10 @@
     height: 100vh;
     display: grid;
     grid-template-columns: min-content 1fr min-content ;
-    grid-template-rows: 1fr min-content;
+    grid-template-rows: min-content 1fr ;
     grid-template-areas: 
-      "left img right"
-      "left close right"
+      "close img ."
+      "left  img right"
     ;
     background-color: hsla(110, 10%, 10%, 40%);
   }
@@ -82,8 +81,8 @@
     align-self: center;
     color: silver;
     align-items: center;
-    padding: 30% 0.5em;
-    margin: 0.5em;
+    padding: 1em;
+    height: 100%;
     border-radius: 0.5em;
   }
 
@@ -98,7 +97,7 @@
     align-self: center;
     color: silver;
     align-items: center;
-    padding: 0.5em 30%;
+    padding: 0.5em;
     border-radius: 0.5em;
     background-color: none;
   }

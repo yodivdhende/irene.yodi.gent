@@ -11,10 +11,18 @@
 		if(dir && name) return 'no-scroll';
 		return ''
 	})
-
-
-
 	let { children } = $props();
+
+	$effect(() =>{
+		if (focusImage == null) setBodyScroll(true);
+		if( dir && name) setBodyScroll(false);
+	})
+
+	function setBodyScroll(value: boolean) {
+		if (value) window.document.body.classList.remove('no-scroll');
+		else window.document.body.classList.add('no-scroll');
+	}
+
 </script>
 
 <svelte:head>
@@ -34,6 +42,7 @@
 	main{
 		overflow: scroll;
 	}
+
 	.focus-hover{
 		position: fixed;
 		top:0;
@@ -41,7 +50,7 @@
 		background-color: rgba(0,0,0,0.8);
 	}
 
-	.no-scroll {
+	:global(body.no-scroll) {
 		overflow:hidden
 	}
 </style>
