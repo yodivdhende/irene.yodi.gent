@@ -8,6 +8,12 @@
 	let img: HTMLImageElement | undefined = $state(undefined);
 	let width: number = $state(300);
 	let height: number = $state(200);
+	let url: string | null = $derived.by(() => {
+		if(name && dir){
+			return `/assets/images/${dir}/${name}`;
+		}
+		return null;
+	})
 
 	$effect(() => {
 		if (img != null) {
@@ -43,20 +49,19 @@
 	}
 </script>
 
-{#await import(/*@vite-ignore*/ `/assets/images/${dir}/${name}`)}
-	<div class="placeholder"></div>
-{:then src}
+{#if url != null}
 	<button onclick={setFocusImage} class={`${widthStyleString} ${heightStyleString}`}>
-		<img alt="wedding" src={src.default} bind:this={img} />
+		<img alt="wedding" src={url} bind:this={img} />
 	</button>
-{/await}
+{/if}
 
 <style>
-	.placeholder {
+	/* .placeholder {
 		width: 300px;
 		height: 200px;
 		background-color: silver;
-	}
+	} */
+
 	img {
 		width: 100%;
 		height: 100%;
