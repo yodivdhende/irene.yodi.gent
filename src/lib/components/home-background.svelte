@@ -104,12 +104,13 @@
 		img {
 			width: 100%;
       height: auto;
+			bottom: 0;
 		}
 
 		@keyframes imagesMoveUp {
 			100% {
 				width: 80%;
-				top: 30%;
+				bottom: 25%;
 			}
 		}
 
@@ -119,7 +120,7 @@
 
     @keyframes textMoveUp {
       100% {
-        top: 60%;
+        top: 70%;
       }
     }
 	}
