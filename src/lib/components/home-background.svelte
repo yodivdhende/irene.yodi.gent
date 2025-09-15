@@ -35,7 +35,7 @@
 		width: auto;
 		max-width: 100vw;
 		height: 100%;
-		top: 50%;
+		bottom: -50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
 	}
@@ -70,7 +70,7 @@
 	@keyframes imagesMoveUp {
 		100% {
 			height: 70%;
-			top: 30%;
+			bottom: -5%;
 		}
 	}
 

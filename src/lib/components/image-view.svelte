@@ -43,7 +43,7 @@
     <ChevronLeft size="48"/>
   </button>
   <div class="image">
-    {#await import(/*@vite-ignore*/ `$lib/assets/images/${dir}/${name}`)}
+    {#await import(/*@vite-ignore*/ `static/assets/images/${dir}/${name}`)}
       <div class="placeholder"></div>
     {:then src}
         <img alt="wedding" src={src.default} />

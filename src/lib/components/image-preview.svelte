@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { focusImageService } from '$lib/services/image-focus.svelte';
-	const images = import.meta.glob('$lib/asssets/images/*/*.jpg', { import: 'default' });
 
 	let { name, dir }: { name: string; dir: string } = $props();
 
@@ -44,22 +43,12 @@
 	}
 </script>
 
-<!-- {#await import(/*@vite-ignore*/ `$lib/assets/images/${dir}/${name}`)}
+{#await import(/*@vite-ignore*/ `/assets/images/${dir}/${name}`)}
 	<div class="placeholder"></div>
 {:then src}
 	<button onclick={setFocusImage} class={`${widthStyleString} ${heightStyleString}`}>
 		<img alt="wedding" src={src.default} bind:this={img} />
 	</button>
-{/await} -->
-
-{#await images[`$lib/assets/images/${dir}/${name}`]()}
-	<div class="placeholder"></div>
-{:then src}
-	{#if typeof src === 'string'}
-		<button onclick={setFocusImage} class={`${widthStyleString} ${heightStyleString}`}>
-			<img alt="wedding" {src} bind:this={img} />
-		</button>
-	{/if}
 {/await}
 
 <style>
