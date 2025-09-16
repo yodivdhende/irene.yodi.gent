@@ -6,7 +6,7 @@ export const handle: Handle = async ({resolve, event}) => {
       return new Response(null,{
         headers: {
           'Access-Control-Allow-Methods': 'GET',
-          'Access-Control-Allow-Origin': 'irene.yodi.gent',
+          'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': '*',
         }
       })
@@ -15,7 +15,7 @@ export const handle: Handle = async ({resolve, event}) => {
 
   const response = await resolve(event);
   if (event.url.pathname.startsWith('/api')){
-    response.headers.append('Access-control-Allow-Origin', `irene.yodi.gent`)
+    response.headers.append('Access-control-Allow-Origin', `*`)
   }
 
   return response;
