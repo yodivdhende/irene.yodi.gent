@@ -10,7 +10,7 @@
 	let height: number = $state(200);
 	let url: string | null = $derived.by(() => {
 		if(name && dir){
-			return `/assets/images/${dir}/${name}`;
+			return `/assets/images/${dir}_small/${name}`;
 		}
 		return null;
 	})
